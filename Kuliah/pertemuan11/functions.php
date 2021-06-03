@@ -80,3 +80,23 @@ function ubah($data)
 
   return mysqli_affected_rows($conn);
 }
+
+function cari($keyword)
+{
+  $conn = koneksi();
+
+  $query = "SELECT * FROM mahasiswa
+            WHERE Nama LIKE '%$keyword%' OR
+            NIM LIKE '%$keyword%' OR
+            Email LIKE '%$keyword%' OR
+            Departemen LIKE '%$keyword%'";
+
+  $result = mysqli_query($conn, $query);
+
+  $rows = [];
+  while ($row = mysqli_fetch_assoc($result)) {
+    $rows[] = $row;
+  }
+
+  return $rows;
+}
