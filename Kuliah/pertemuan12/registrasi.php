@@ -1,16 +1,15 @@
 <?php
-session_start();
-
-if (isset($_SESSION['login'])) {
-  header("Location: index.php");
-  exit;
-}
-
 require 'functions.php';
 
-// ketika tombol login ditekan
-if (isset($_POST['login'])) {
-  $login = login($_POST);
+if (isset($_POST['registrasi'])) {
+  if (registrasi($_POST) > 0) {
+    echo "<script>
+          alert('User berhasil ditambahkan. Silahkan login!');
+          document.location.href = 'login.php';
+          </script>";
+  } else {
+    echo "User gagal ditambahkan!";
+  }
 }
 ?>
 
@@ -21,15 +20,12 @@ if (isset($_POST['login'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Registrasi</title>
 </head>
 
 <body>
-  <h3>Form Login</h3>
+  <h3>Form Registrasi</h3>
 
-  <?php if (isset($login['error'])) : ?>
-    <p style="color: red; font-style: italic;"><?= $login['pesan']; ?></p>
-  <?php endif; ?>
   <form action="" method="POST">
     <ul>
       <li>
@@ -41,14 +37,17 @@ if (isset($_POST['login'])) {
       <li>
         <label>
           Password :
-          <input type="password" name="password" required>
+          <input type="password" name="password1" required>
         </label>
       </li>
       <li>
-        <button type="submit" name="login">Login</button>
+        <label>
+          Konfirmasi Password :
+          <input type="password" name="password2" required>
+        </label>
       </li>
       <li>
-        <a href="registrasi.php">Sing Up</a>
+        <button type="submit" name="registrasi">Registrasi</button>
       </li>
     </ul>
   </form>
